@@ -9,7 +9,7 @@ class App extends Component {
       <div className="App">
       <Link to="/login">
         <header className="App-header">
-          <h1>Ruddy Castro - Regidor 2020</h1>
+          <h1>Ruddy Castro</h1>
           <h3><b>Mi compromiso es contigo!</b></h3>
         </header>
         </Link>

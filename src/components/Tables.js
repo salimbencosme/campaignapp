@@ -9,7 +9,7 @@ var styleInput = {
     'width': '97%'
 }
 
-class Schools extends Component{
+class Tables extends Component{
 
     constructor(props) {
         super(props);
@@ -27,19 +27,19 @@ class Schools extends Component{
                             <form>
 
                                 <div class="pull-left">
-                                    <h2 style={{ 'margin-left': '7px' }} class="titleDetails">Formulario de Colegios electorales</h2>
+                                    <h2 style={{ 'margin-left': '7px' }} class="titleDetails">Formulario de Mesas</h2>
                                 </div>
                                 <br />
                                 <div class="card-contact border-primary rounded-0">
 
                                     <div class="form-group">
                                         <div>
-                                            <input style={styleInput} type="text" class="form-control" id="fullname" name="fullname" placeholder="Nombre colegio" required />
+                                            <input style={styleInput} type="text" class="form-control" id="fullname" name="fullname" placeholder="Codigo de mesa" required />
                                         </div>
                                     </div>
 
                                     <div class="form-group">
-                                        <label>Coordinador</label>
+                                        <label>Colegio</label>
                                         <select class="custom-select">
                                             <option>-</option>
                                         </select>
@@ -70,4 +70,4 @@ class Schools extends Component{
     }
 }
 
-export default Schools;
+export default Tables;

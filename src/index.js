@@ -9,6 +9,7 @@ import Login from './components/Login';
 import Home from './components/Home';
 import Persons from './components/Persons';
 import Schools from './components/Schools';
+import Tables from './components/Tables';
 import Reports from './components/Reports';
 import ReportsDetails from './components/ReportsDetails';
 ReactDOM.render(
@@ -21,6 +22,7 @@ ReactDOM.render(
             <Route exact path="/home" component={Home} />
             <Route exact path="/persons" component={Persons} />
             <Route exact path="/schools" component={Schools} />
+            <Route exact path="/tables" component={Tables} />
             <Route exact path="/reports" component={Reports} />
             </Main>
        

@@ -36,6 +36,25 @@ class Persons extends Component {
                                         </div>
                                     </div>
 
+
+                                    <div class="form-group">
+                                        <div>
+                                            <input style={styleInput} type="text" class="form-control" id="fullname" name="fullname" placeholder="Cedula" required />
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div>
+                                            <input style={styleInput} type="text" class="form-control" id="fullname" name="fullname" placeholder="Edad" required />
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div>
+                                            <input style={styleInput} type="text" class="form-control" id="fullname" name="fullname" placeholder="Correo electronico" required />
+                                        </div>
+                                    </div>
+
                                     <div class="form-group">
                                         <div>
                                             <input style={styleInput} type="text" class="form-control" id="fullname" name="fullname" placeholder="Telefono" required />
@@ -44,10 +63,25 @@ class Persons extends Component {
 
 
                                     <div class="form-group">
-                                        <select class="selectpicker">
-                                            <option>Mustard</option>
-                                            <option>Ketchup</option>
-                                            <option>Barbecue</option>
+
+                                        <label>Tipo</label>
+                                        <select class="custom-select">
+                                            <option>Ciudadano</option>
+                                            <option>Coordinador</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Colegio</label>
+                                        <select class="custom-select">
+                                            <option>-</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Mesa</label>
+                                        <select class="custom-select">
+                                            <option>-</option>          
                                         </select>
                                     </div>
 

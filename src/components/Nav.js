@@ -23,6 +23,7 @@ class Nav extends Component {
             <li><Link  to="/home">Mis votos</Link></li>
             <li><Link  to="/persons">Registrar</Link></li>
             <li><Link  to="/schools">Colegios</Link></li>
+            <li><Link  to="/tables">Mesas</Link></li>
             <li><Link  to="/reports">Reportes</Link></li>
           </NAVT>
         </Navbar.Collapse>
