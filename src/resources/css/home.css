@@ -153,6 +153,7 @@ section .section-title {
     -webkit-box-shadow: 5px 7px 9px -4px rgb(158, 158, 158);
     -moz-box-shadow: 5px 7px 9px -4px rgb(158, 158, 158);
     box-shadow: 5px 7px 9px -4px rgb(158, 158, 158);
+    height: 200px;
 }
 
 .frontside,
@@ -207,3 +208,9 @@ p {
     background: red;
 }
 
+.backCustom{
+    padding-top: 29.5px;
+    margin-top: 29.5px;
+    padding-right: 5px;
+    padding-left: 5px;
+}
