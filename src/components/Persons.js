@@ -14,11 +14,66 @@ class Persons extends Component {
         super(props);
         this.state = {
             collage:[],
-            collage_id_selected: -1
+            collage_id_selected: -1,
+            fullname: '',
+            identification_card:'',
+            email:'',
+            phone:'',
+            type:-1,
+            collage:'',
+            table:'',
+            user_type: '',
+            collage_id:'',
+            age:'',
+            table:''
         }
 
         this.handlerSelectItem  = this.handlerSelectItem.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
+       
+    handleChange(event) {
+        this.setState(
+            {
+                fullname: (event.target.id === 'fullname') ? event.target.value : this.state.fullname,
+                cedula: (event.target.id === 'cedula') ? event.target.value : this.state.email,
+                email: (event.target.id === 'email') ? event.target.value : this.state.title,
+                phone: (event.target.id === 'phone') ? event.target.value : this.state.content,
+                user_type: (event.target.id === 'user_type') ? event.target.value : this.state.content     
+            }
+        );
+    }
+
+    handleSubmit(event) {
+        event.preventDefault();
+
+        let info = {
+            content: this.state.content,
+            date_created: currentDateWithFormat(),
+            email: this.state.email,
+            fullname: this.state.fullname,
+            title: this.state.title
+        }
+
+        try {
+            saveContact(info);
+            this.setState(
+                {
+                    fullname: '',
+                    email: '',
+                    title: '',
+                    content: ''
+                }
+            );
+            NotificationManager.success(manageLanguage(this.state.language, 'Mensaje enviado con éxito', 'Message sent succesfully'));
+        } catch (e) {
+            NotificationManager.error(manageLanguage(this.state.language, 'No se pudo guardar la información.', 'Could not save the information'));
+        }
+
+
+    }
+
 
     handlerApiLogic(){
         let currentComponent = this;
@@ -53,7 +108,7 @@ class Persons extends Component {
         this.state.collage.forEach(element => {
             list.push(<option value={element.id}>{element.name}</option>);
         });
-        return <select onChange={this.handlerSelectItem} class="custom-select">{list}</select>;
+        return <select id="collage_id" name="collage_id" onChange={this.handlerSelectItem} class="custom-select">{list}</select>;
     }
 
     createSelectAge(){
@@ -61,9 +116,8 @@ class Persons extends Component {
         for(let x=18;x<=150;x++){
             list.push(<option value={x}>{x}</option>);
         }
-        return <select class="custom-select">{list}</select>;
+        return <select id="age" name="age" class="custom-select">{list}</select>;
     }
-
 
     createSelectTables(){
 
@@ -78,7 +132,7 @@ class Persons extends Component {
                     list.push(<option value={element.id}>{element.name}</option>);
                 }   
             });
-            return <select class="custom-select">{list}</select>;
+            return <select id="table" name="table" class="custom-select">{list}</select>;
         }
     }
 
@@ -117,7 +171,7 @@ class Persons extends Component {
 
                                     <div class="form-group">
                                         <div>
-                                            <input style={styleInput} type="text" class="form-control" id="fullname" name="fullname" placeholder="Cedula" required />
+                                            <input style={styleInput} type="text" class="form-control" id="cedula" name="cedula" placeholder="Cedula" required />
                                         </div>
                                     </div>
 
@@ -125,13 +179,13 @@ class Persons extends Component {
 
                                     <div class="form-group">
                                         <div>
-                                            <input style={styleInput} type="text" class="form-control" id="fullname" name="fullname" placeholder="Correo electronico" required />
+                                            <input style={styleInput} type="text" class="form-control" id="email" name="email" placeholder="Correo electronico" required />
                                         </div>
                                     </div>
 
                                     <div class="form-group">
                                         <div>
-                                            <input style={styleInput} type="text" class="form-control" id="fullname" name="fullname" placeholder="Telefono" required />
+                                            <input style={styleInput} type="text" class="form-control" id="phone" name="phone" placeholder="Telefono" required />
                                         </div>
                                     </div>
 
@@ -147,9 +201,8 @@ class Persons extends Component {
 
 
                                     <div class="form-group">
-
                                         <label>Tipo</label>
-                                        <select class="custom-select">
+                                        <select id="user_type" name="user_type" class="custom-select">
                                             <option>Ciudadano</option>
                                             <option>Coordinador</option>
                                         </select>
