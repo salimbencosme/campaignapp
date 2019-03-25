@@ -24,7 +24,7 @@ class Persons extends Component {
             table:'',
             user_type: '',
             collage_id:'',
-            age:'',
+            age:18,
             table:''
         }
 
@@ -37,10 +37,11 @@ class Persons extends Component {
         this.setState(
             {
                 fullname: (event.target.id === 'fullname') ? event.target.value : this.state.fullname,
-                cedula: (event.target.id === 'cedula') ? event.target.value : this.state.email,
-                email: (event.target.id === 'email') ? event.target.value : this.state.title,
-                phone: (event.target.id === 'phone') ? event.target.value : this.state.content,
-                user_type: (event.target.id === 'user_type') ? event.target.value : this.state.content     
+                cedula: (event.target.id === 'cedula') ? event.target.value : this.state.cedula,
+                email: (event.target.id === 'email') ? event.target.value : this.state.email,
+                phone: (event.target.id === 'phone') ? event.target.value : this.state.phone,
+                user_type: (event.target.id === 'user_type') ? event.target.value : this.state.user_type,
+                age: (event.target.id === 'age') ? event.target.value : this.state.age
             }
         );
     }
@@ -48,6 +49,8 @@ class Persons extends Component {
     handleSubmit(event) {
         event.preventDefault();
 
+        console.log(this.state);
+        /*
         let info = {
             content: this.state.content,
             date_created: currentDateWithFormat(),
@@ -70,8 +73,7 @@ class Persons extends Component {
         } catch (e) {
             NotificationManager.error(manageLanguage(this.state.language, 'No se pudo guardar la información.', 'Could not save the information'));
         }
-
-
+        */
     }
 
 
@@ -105,9 +107,13 @@ class Persons extends Component {
     createSelectCollage(){
         let list = [];
         list.push(<option value="-1">-</option>);
+
+        if(this.state.collage != ""){
+            
         this.state.collage.forEach(element => {
             list.push(<option value={element.id}>{element.name}</option>);
         });
+        }
         return <select id="collage_id" name="collage_id" onChange={this.handlerSelectItem} class="custom-select">{list}</select>;
     }
 
@@ -132,13 +138,12 @@ class Persons extends Component {
                     list.push(<option value={element.id}>{element.name}</option>);
                 }   
             });
-            return <select id="table" name="table" class="custom-select">{list}</select>;
+            return <select id="table" name="table" class="custom-select" onChange={this.handleChange}>{list}</select>;
         }
     }
 
     handlerSelectItem(event){
         console.log(event.target.value);
-        console.log(this.state.table);
         var this_holder = this;
         this_holder.setState({collage_id_selected:event.target.value}, function () {
             this_holder.createSelectTables();
@@ -154,7 +159,7 @@ class Persons extends Component {
 
                         <div class="col-12 col-md-12 col-lg-12">
 
-                            <form>
+                            <form onSubmit={this.handleSubmit}> 
 
                                 <div class="pull-left">
                                     <h2 style={{ 'margin-left': '7px' }} class="titleDetails">Formulario de registro</h2>
@@ -164,14 +169,14 @@ class Persons extends Component {
 
                                     <div class="form-group">
                                         <div>
-                                            <input style={styleInput} type="text" class="form-control" id="fullname" name="fullname" placeholder="Nombre completo" required />
+                                            <input style={styleInput} type="text" class="form-control" id="fullname" name="fullname" placeholder="Nombre completo" onChange={this.handleChange} required />
                                         </div>
                                     </div>
 
 
                                     <div class="form-group">
                                         <div>
-                                            <input style={styleInput} type="text" class="form-control" id="cedula" name="cedula" placeholder="Cedula" required />
+                                            <input style={styleInput} type="text" class="form-control" id="cedula" name="cedula" placeholder="Cedula" onChange={this.handleChange} required />
                                         </div>
                                     </div>
 
@@ -179,13 +184,13 @@ class Persons extends Component {
 
                                     <div class="form-group">
                                         <div>
-                                            <input style={styleInput} type="text" class="form-control" id="email" name="email" placeholder="Correo electronico" required />
+                                            <input style={styleInput} type="text" class="form-control" id="email" name="email" placeholder="Correo electronico" onChange={this.handleChange} required />
                                         </div>
                                     </div>
 
                                     <div class="form-group">
                                         <div>
-                                            <input style={styleInput} type="text" class="form-control" id="phone" name="phone" placeholder="Telefono" required />
+                                            <input style={styleInput} type="text" class="form-control" id="phone" name="phone" placeholder="Telefono" onChange={this.handleChange} required />
                                         </div>
                                     </div>
 
@@ -219,7 +224,7 @@ class Persons extends Component {
                                     </div>
 
                                     <div class="pull-right space-button">
-                                        <input style={{ 'margin-right': '30px' }} type="button" class="fadeIn fourth" value="Guardar" />
+                                        <input style={{ 'margin-right': '30px' }} type="submit" class="fadeIn fourth" value="Guardar" />
                                     </div>
                                     <br />
                                     <br />
