@@ -24,6 +24,7 @@ class Persons extends Component {
             table:'',
             user_type: '',
             collage_id:'',
+            table_id:'',
             age:18,
             table:''
         }
@@ -34,16 +35,21 @@ class Persons extends Component {
     }
        
     handleChange(event) {
+
+        console.log(event);
         this.setState(
             {
                 fullname: (event.target.id === 'fullname') ? event.target.value : this.state.fullname,
-                cedula: (event.target.id === 'cedula') ? event.target.value : this.state.cedula,
+                identification_card: (event.target.id === 'cedula') ? event.target.value : this.state.identification_card,
                 email: (event.target.id === 'email') ? event.target.value : this.state.email,
                 phone: (event.target.id === 'phone') ? event.target.value : this.state.phone,
                 user_type: (event.target.id === 'user_type') ? event.target.value : this.state.user_type,
-                age: (event.target.id === 'age') ? event.target.value : this.state.age
+                age: (event.target.id === 'age') ? event.target.value : this.state.age,
+                table_id: (event.target.id === 'table') ? event.target.value : this.state.table_id
             }
         );
+
+        console.log(this.state);
     }
 
     handleSubmit(event) {
@@ -122,7 +128,7 @@ class Persons extends Component {
         for(let x=18;x<=150;x++){
             list.push(<option value={x}>{x}</option>);
         }
-        return <select id="age" name="age" class="custom-select">{list}</select>;
+        return <select onChange={this.handleChange} id="age" name="age" class="custom-select">{list}</select>;
     }
 
     createSelectTables(){
@@ -207,9 +213,9 @@ class Persons extends Component {
 
                                     <div class="form-group">
                                         <label>Tipo</label>
-                                        <select id="user_type" name="user_type" class="custom-select">
-                                            <option>Ciudadano</option>
-                                            <option>Coordinador</option>
+                                        <select id="user_type" name="user_type" class="custom-select"  onChange={this.handleChange} >
+                                            <option value="ciudadano">Ciudadano</option>
+                                            <option value="coordinador">Coordinador</option>
                                         </select>
                                     </div>
 
