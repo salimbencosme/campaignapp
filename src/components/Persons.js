@@ -22,7 +22,7 @@ class Persons extends Component {
             type:-1,
             collage:'',
             table:'',
-            user_type: '',
+            user_type: 'ciudadano',
             collage_id:'',
             table_id:'',
             age:18,
@@ -45,7 +45,8 @@ class Persons extends Component {
                 phone: (event.target.id === 'phone') ? event.target.value : this.state.phone,
                 user_type: (event.target.id === 'user_type') ? event.target.value : this.state.user_type,
                 age: (event.target.id === 'age') ? event.target.value : this.state.age,
-                table_id: (event.target.id === 'table') ? event.target.value : this.state.table_id
+                table_id: (event.target.id === 'table') ? event.target.value : this.state.table_id,
+                user_type: (event.target.id === 'user_type') ? event.target.value : this.state.user_type
             }
         );
 
@@ -56,6 +57,42 @@ class Persons extends Component {
         event.preventDefault();
 
         console.log(this.state);
+
+
+        /*
+        
+               {
+        "active": true,
+        "citizen": {
+            "active": true,
+            "age": 29,
+            "email": "romerbaldera@gmail.com",
+            "id": "-L_ANw4GsGsdEPWgfRf_",
+            "identification": "100-0124561-3",
+            "name": "Romer Baldera",
+            "phone": "809-593-7383",
+            "type": "ciudadano"
+        },
+        "date_cretated": "04/04/2019",
+        "electoraltable": {
+            "active": true,
+            "date_cretated": "01/16/2019",
+            "electoralcollege": {
+                "active": true,
+                "address": "Calle puerto rico, ensanche Ozama",
+                "date_cretated": "01/16/2019",
+                "id": "-LWN-tZoAVlIKGIuYOE4",
+                "name": "Colegio Adventista Ozama",
+                "pic": "",
+                "video": ""
+            },
+            "id": "-LWN2IcFDum1pjC85G-A",
+            "name": "1001A"
+        }
+    }
+
+        */
+
         /*
         let info = {
             content: this.state.content,
