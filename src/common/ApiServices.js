@@ -6,6 +6,10 @@ export function getAllCollageAndTables() {
     return firebase.database().ref('electoraltable/').orderByChild('electoralcollege');
 };
 
+export function getAllVotes() {
+    return firebase.database().ref('votes/').orderByChild('electoraltable');
+};
+
 export function getCollageInfo(infoData) {
     var collageTemp = [];
     var tempNames = [];
@@ -65,6 +69,52 @@ export function getTableInfo(infoData) {
     }
     return tableTemp;
 };
+
+
+
+export function savePerson(personParam) {
+
+    fetch('https://political-campaign.firebaseio.com/votes.json', {
+        method: 'post',
+        headers: {
+            'Accept': 'application/json, text/plain, */*',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(
+            {
+                active : true,
+                citizen : {
+                    active : personParam.citizen.active,
+                    age : personParam. citizen.age,
+                    email : personParam.citizen.email,
+                    identification : personParam.citizen.identification,
+                    name : personParam.citizen.name,
+                    phone : personParam.citizen.phone,
+                    type :  personParam.citizen.type
+                },
+                date_cretated :  personParam.date_cretated,
+                 electoraltable : {
+                    active : personParam.electoraltable.active,
+                    date_cretated : personParam.electoraltable.date_created,
+                    electoralcollege : {
+                        active : personParam.electoraltable.electoralcollege.active,
+                        address : personParam.electoraltable.electoralcollege.address,
+                        date_cretated : personParam.electoraltable.electoralcollege.date_cretated,
+                        id : personParam.electoraltable.electoralcollege.id,
+                        name : personParam.electoraltable.electoralcollege.name,
+                        pic : personParam.electoraltable.electoralcollege.pic,
+                        video : personParam.electoraltable.electoralcollege.video
+                    },
+                    id : personParam.electoraltable.id,
+                    name : personParam.electoraltable.name
+                }
+            }
+        )
+    }).then(res => res.json)
+        .then(res => res.json);
+};
+
+
 
 
 

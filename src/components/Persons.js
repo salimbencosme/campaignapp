@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import '../resources/css/home.css';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
-import { getAllCollageAndTables,getCollageInfo,getTableInfo } from '../common/ApiServices';
+import { getAllCollageAndTables, getCollageInfo, getTableInfo, savePerson } from '../common/ApiServices';
+import { currentDateWithFormat } from '../common/Utils';
 
 var styleInput = {
     'text-align': 'initial',
@@ -13,27 +14,26 @@ class Persons extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            collage:[],
+            collage: [],
             collage_id_selected: -1,
             fullname: '',
-            identification_card:'',
-            email:'',
-            phone:'',
-            type:-1,
-            collage:'',
-            table:'',
+            identification_card: '',
+            email: '',
+            phone: '',
+            type: -1,
+            collage: '',
             user_type: 'ciudadano',
-            collage_id:'',
-            table_id:'',
-            age:18,
-            table:''
+            collage_id: '',
+            table_id: '',
+            age: 18,
+            table: ''
         }
 
-        this.handlerSelectItem  = this.handlerSelectItem.bind(this);
+        this.handlerSelectItem = this.handlerSelectItem.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
-       
+
     handleChange(event) {
 
         console.log(event);
@@ -56,71 +56,68 @@ class Persons extends Component {
     handleSubmit(event) {
         event.preventDefault();
 
-        console.log(this.state);
+        if (this.state.table_id != "") {
+
+            console.log(this.state);
+
+            var electoraltableTemp = {};
+
+            console.log(this.state.table);
+
+            this.state.table.forEach(element => {
+                if (element.id === this.state.table_id) {
+                    electoraltableTemp = element;
+                }
+            });
 
 
-        /*
-        
-               {
-        "active": true,
-        "citizen": {
-            "active": true,
-            "age": 29,
-            "email": "romerbaldera@gmail.com",
-            "id": "-L_ANw4GsGsdEPWgfRf_",
-            "identification": "100-0124561-3",
-            "name": "Romer Baldera",
-            "phone": "809-593-7383",
-            "type": "ciudadano"
-        },
-        "date_cretated": "04/04/2019",
-        "electoraltable": {
-            "active": true,
-            "date_cretated": "01/16/2019",
-            "electoralcollege": {
-                "active": true,
-                "address": "Calle puerto rico, ensanche Ozama",
-                "date_cretated": "01/16/2019",
-                "id": "-LWN-tZoAVlIKGIuYOE4",
-                "name": "Colegio Adventista Ozama",
-                "pic": "",
-                "video": ""
-            },
-            "id": "-LWN2IcFDum1pjC85G-A",
-            "name": "1001A"
+            var info = {
+                active: true,
+                citizen: {
+                    active: true,
+                    age: this.state.age,
+                    email: this.email,
+                    identification: this.state.identification_card,
+                    name: this.state.fullname,
+                    phone: this.state.phone,
+                    type: this.state.user_type
+                },
+                date_cretated: currentDateWithFormat(),
+                electoraltable: electoraltableTemp
+            };
+        } else {
+            NotificationManager.error("Debe seleccionar un colegio electoral.");
         }
-    }
 
-        */
-
-        /*
-        let info = {
-            content: this.state.content,
-            date_created: currentDateWithFormat(),
-            email: this.state.email,
-            fullname: this.state.fullname,
-            title: this.state.title
-        }
+        console.log("INFO");
+        console.log(info);
 
         try {
-            saveContact(info);
+            savePerson(info);
             this.setState(
                 {
+                    collage_id_selected: -1,
                     fullname: '',
+                    identification_card: '',
                     email: '',
-                    title: '',
-                    content: ''
+                    phone: '',
+                    type: -1,
+                    collage: '',
+                    user_type: 'ciudadano',
+                    collage_id: '',
+                    table_id: '',
+                    age: 18
                 }
             );
-            NotificationManager.success(manageLanguage(this.state.language, 'Mensaje enviado con éxito', 'Message sent succesfully'));
+            NotificationManager.success("Persona registrada con éxito");
         } catch (e) {
-            NotificationManager.error(manageLanguage(this.state.language, 'No se pudo guardar la información.', 'Could not save the information'));
+            NotificationManager.error("No se pudo guardar la información.");
         }
-        */
+
     }
 
 
-    handlerApiLogic(){
+    handlerApiLogic() {
         let currentComponent = this;
         getAllCollageAndTables().on('value', function (data) {
             let collageTemp = getCollageInfo(data.val());
@@ -136,7 +133,7 @@ class Persons extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        this.handlerApiLogic();  
+        this.handlerApiLogic();
         console.log("componentWillReceiveProps");
         console.log(this.state.collage);
     }
@@ -147,49 +144,65 @@ class Persons extends Component {
         console.log(this.state.collage);
     }
 
-    createSelectCollage(){
+    createSelectCollage() {
         let list = [];
         list.push(<option value="-1">-</option>);
 
-        if(this.state.collage != ""){
-            
-        this.state.collage.forEach(element => {
-            list.push(<option value={element.id}>{element.name}</option>);
-        });
+        if (this.state.collage != "") {
+
+            this.state.collage.forEach(element => {
+                list.push(<option value={element.id}>{element.name}</option>);
+            });
         }
+
         return <select id="collage_id" name="collage_id" onChange={this.handlerSelectItem} class="custom-select">{list}</select>;
     }
 
-    createSelectAge(){
+    createSelectAge() {
         let list = [];
-        for(let x=18;x<=150;x++){
+        for (let x = 18; x <= 150; x++) {
             list.push(<option value={x}>{x}</option>);
         }
         return <select onChange={this.handleChange} id="age" name="age" class="custom-select">{list}</select>;
     }
 
-    createSelectTables(){
+    createSelectTables() {
 
-        if(this.state.collage_id_selected === -1){
+        if (this.state.collage_id_selected === -1) {
             return <select class="custom-select"><option value="-1">-</option></select>;
-        }else{
+        } else {
             let list = [];
             var ref_this = this;
             ref_this.state.table.forEach(element => {
-
-                if(element.electoralcollege.id === ref_this.state.collage_id_selected){
+                if (element.electoralcollege.id === ref_this.state.collage_id_selected) {
                     list.push(<option value={element.id}>{element.name}</option>);
-                }   
+                }
             });
             return <select id="table" name="table" class="custom-select" onChange={this.handleChange}>{list}</select>;
         }
     }
 
-    handlerSelectItem(event){
-        console.log(event.target.value);
+    handlerSelectItem(event) {
         var this_holder = this;
-        this_holder.setState({collage_id_selected:event.target.value}, function () {
+        this_holder.setState({ collage_id_selected: event.target.value }, function () {
             this_holder.createSelectTables();
+
+            if (this.state.table != "") {
+                let firstIdSelected = 0;
+                let cont = 0;
+                this.state.table.forEach(element => {
+
+                    if (element.electoralcollege.id === this.state.collage_id_selected) {
+                        if (cont === 0) {
+                            firstIdSelected = element.id;
+                            cont++;
+                        }
+                    }
+                });
+
+                this.setState({ table_id: firstIdSelected });
+
+            }
         });
     }
 
@@ -202,7 +215,7 @@ class Persons extends Component {
 
                         <div class="col-12 col-md-12 col-lg-12">
 
-                            <form onSubmit={this.handleSubmit}> 
+                            <form onSubmit={this.handleSubmit}>
 
                                 <div class="pull-left">
                                     <h2 style={{ 'margin-left': '7px' }} class="titleDetails">Formulario de registro</h2>
@@ -223,7 +236,7 @@ class Persons extends Component {
                                         </div>
                                     </div>
 
-                                 
+
 
                                     <div class="form-group">
                                         <div>
@@ -237,7 +250,7 @@ class Persons extends Component {
                                         </div>
                                     </div>
 
-                                       <div class="form-group">
+                                    <div class="form-group">
                                         <div>
                                             <div class="form-group">
 
@@ -250,7 +263,7 @@ class Persons extends Component {
 
                                     <div class="form-group">
                                         <label>Tipo</label>
-                                        <select id="user_type" name="user_type" class="custom-select"  onChange={this.handleChange} >
+                                        <select id="user_type" name="user_type" class="custom-select" onChange={this.handleChange} >
                                             <option value="ciudadano">Ciudadano</option>
                                             <option value="coordinador">Coordinador</option>
                                         </select>
