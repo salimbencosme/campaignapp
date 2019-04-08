@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import '../resources/css/home.css';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
-import { getAllCollageAndTables, getCollageInfo, getTableInfo, savePerson } from '../common/ApiServices';
+import { getAllCollageAndTables, getCollageInfo, getTableInfo, savePerson, getAllVotes } from '../common/ApiServices';
 import { currentDateWithFormat } from '../common/Utils';
 
 var styleInput = {
@@ -45,8 +45,7 @@ class Persons extends Component {
                 phone: (event.target.id === 'phone') ? event.target.value : this.state.phone,
                 user_type: (event.target.id === 'user_type') ? event.target.value : this.state.user_type,
                 age: (event.target.id === 'age') ? event.target.value : this.state.age,
-                table_id: (event.target.id === 'table') ? event.target.value : this.state.table_id,
-                user_type: (event.target.id === 'user_type') ? event.target.value : this.state.user_type
+                table_id: (event.target.id === 'table') ? event.target.value : this.state.table_id
             }
         );
 
@@ -55,7 +54,7 @@ class Persons extends Component {
 
     handleSubmit(event) {
         event.preventDefault();
-
+        var this_ref = this;
         if (this.state.table_id != "") {
 
             console.log(this.state);
@@ -85,33 +84,61 @@ class Persons extends Component {
                 date_cretated: currentDateWithFormat(),
                 electoraltable: electoraltableTemp
             };
+
+
+            console.log("INFO");
+            console.log(info);
+
+            var id_to_compare = this.state.identification_card;
+            var contador = -1;
+            var saved = false;
+            getAllVotes().on('value', function (data) {
+                let infoData = data.val();
+                contador = 0;
+                for (var key in infoData) {
+                    if (infoData[key].citizen.identification === id_to_compare && infoData[key].active === true) {
+                        contador++;
+                    }
+                }
+            }, function (error) {
+                console.log("Error validadando celdula duplicada: " + error.code);
+            });
+
+            if (contador === 0) {
+                try {
+                    if(saved === false){
+                        savePerson(info);
+                        saved = true;
+                        this_ref.setState(
+                            {
+                                collage_id_selected: -1,
+                                fullname: '',
+                                identification_card: '',
+                                email: '',
+                                phone: '',
+                                type: -1,
+                                user_type: 'ciudadano',
+                                collage_id: '',
+                                table_id: '',
+                                age: 18
+                            }
+                        );
+                        document.getElementById("personFromId").reset();
+                    }
+                    id_to_compare = "";
+                    NotificationManager.success("Persona registrada con éxito");
+                } catch (e) {
+                    NotificationManager.error("No se pudo guardar la información.");
+                }
+
+            } else {
+                NotificationManager.error("Existe una persona registrada con este numero de celula.");
+            }
+
+
+
         } else {
             NotificationManager.error("Debe seleccionar un colegio electoral.");
-        }
-
-        console.log("INFO");
-        console.log(info);
-
-        try {
-            savePerson(info);
-            this.setState(
-                {
-                    collage_id_selected: -1,
-                    fullname: '',
-                    identification_card: '',
-                    email: '',
-                    phone: '',
-                    type: -1,
-                    collage: '',
-                    user_type: 'ciudadano',
-                    collage_id: '',
-                    table_id: '',
-                    age: 18
-                }
-            );
-            NotificationManager.success("Persona registrada con éxito");
-        } catch (e) {
-            NotificationManager.error("No se pudo guardar la información.");
         }
 
     }
@@ -215,7 +242,7 @@ class Persons extends Component {
 
                         <div class="col-12 col-md-12 col-lg-12">
 
-                            <form onSubmit={this.handleSubmit}>
+                            <form id="personFromId" onSubmit={this.handleSubmit}>
 
                                 <div class="pull-left">
                                     <h2 style={{ 'margin-left': '7px' }} class="titleDetails">Formulario de registro</h2>
