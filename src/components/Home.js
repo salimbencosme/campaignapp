@@ -50,9 +50,9 @@ class Home extends Component {
 
                 var color = 'red';
 
-                if(item.total <= 2 ){
+                if(item.total <= 5 ){
                     color = 'red';
-                }else if(item.total > 2 && item.total <=10){
+                }else if(item.total > 5 && item.total <=10){
                     color = 'orange';
                 }else if(item.total >10){
                     color ='green';
