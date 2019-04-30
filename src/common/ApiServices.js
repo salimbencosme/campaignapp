@@ -44,6 +44,50 @@ export function getCollageInfo(infoData) {
 };
 
 
+
+export function getVotesInfo(infoData) {
+    var collageTemp = [];
+
+    for (var key in infoData) {
+        var toAdd = 0;
+        
+        for(var x=0;x<collageTemp.length;x++){
+            if(infoData[key].active === true){
+                if(collageTemp[x].collage === infoData[key].electoraltable.electoralcollege.name){
+                    toAdd++;
+                }
+            }
+        }
+
+        if(toAdd === 0){
+            collageTemp.push({
+                "collage_id" : infoData[key].electoraltable.electoralcollege.id,
+                "collage" : infoData[key].electoraltable.electoralcollege.name,
+                "table_id" : infoData[key].electoraltable.id,
+                "table" : infoData[key].electoraltable.name,
+                "total": 0
+            })
+        }
+    }
+
+
+    for(var x=0;x<collageTemp.length;x++){
+        
+        for (var key in infoData) {
+            if(infoData[key].active === true){
+                if(infoData[key].electoraltable.electoralcollege.name === collageTemp[x].collage){
+                    collageTemp[x].total = collageTemp[x].total + 1;
+                }
+            }
+        }        
+
+    }
+
+    return collageTemp;
+};
+
+
+
 export function getTableInfo(infoData) {
     var tableTemp = [];
     for (var key in infoData) {

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import '../resources/css/home.css';
-import { getAllVotes } from '../common/ApiServices';
+import { getAllVotes,getVotesInfo } from '../common/ApiServices';
 
 class Home extends Component {
     constructor(props) {
@@ -28,42 +28,7 @@ class Home extends Component {
 
         getAllVotes().on('value', function (data) {
             let infoData = data.val();
-            var votesContainer = [];
-
-            for (var key in infoData) {
-                if (infoData[key].active === true) {
-                    votesContainer.push(
-                        {
-                            active: infoData[key].active,
-                            citizen: {
-                                active: infoData[key].citizen.active,
-                                age: infoData[key].citizen.age,
-                                email: infoData[key].citizen.email,
-                                identification: infoData[key].citizen.identification,
-                                name: infoData[key].citizen.name,
-                                phone: infoData[key].citizen.phone,
-                                type: infoData[key].citizen.type
-                            },
-                            date_cretated: infoData[key].date_cretated,
-                            electoraltable: {
-                                active: infoData[key].electoraltable.active,
-                                date_cretated: infoData[key].electoraltable.date_created,
-                                electoralcollege: {
-                                    active: infoData[key].electoraltable.electoralcollege.active,
-                                    address: infoData[key].electoraltable.electoralcollege.address,
-                                    date_cretated: infoData[key].electoraltable.electoralcollege.date_cretated,
-                                    id: infoData[key].electoraltable.electoralcollege.id,
-                                    name: infoData[key].electoraltable.electoralcollege.name,
-                                    pic: infoData[key].electoraltable.electoralcollege.pic,
-                                    video: infoData[key].electoraltable.electoralcollege.video
-                                },
-                                id: infoData[key].electoraltable.id,
-                                name: infoData[key].electoraltable.name
-                            }
-                        }
-                    );
-                }
-            }
+            var votesContainer = getVotesInfo(infoData);
 
             currentComponent.setState({
                 votes: votesContainer
@@ -82,6 +47,17 @@ class Home extends Component {
 
         if (this.state.votes.length > 0) {
             this.state.votes.map(item => {
+
+                var color = 'red';
+
+                if(item.total <= 2 ){
+                    color = 'red';
+                }else if(item.total > 2 && item.total <=10){
+                    color = 'orange';
+                }else if(item.total >10){
+                    color ='green';
+                }
+
                 array.push(
 
                     <div class="col-xs-12 col-sm-6 col-md-4">
@@ -90,20 +66,19 @@ class Home extends Component {
                             <div class="frontside">
                                 <div class="card">
                                     <div class="card-body text-center"><br/>
-                                        <center><div class="circle"></div></center>
-                                        <h4 class="card-title">{item.electoraltable.name}</h4>
-                                        <p class="card-text">{item.electoraltable.electoralcollege.name}</p>
-                                        <p class="card-text">Total de votos: 100</p>
+                                        <center><div class="circle" style={{'background': color}}></div></center>
+                                        <p class="card-text">{item.collage}</p>
+                                        <p class="card-text">Total de votos: {item.total}</p>
                                     </div>
                                 </div>
                             </div>
-                            <div class="backside">
+                            <div class="backside" style={{'background': color}}>
                                 <div class="card">
                                     <div class="card-body text-center mt-4">
                                         <center class="backCustom">
-                                        <h4 class="card-title">{item.electoraltable.name} </h4>
+                                        <h4 class="card-title">{item.collage} </h4>
                                         <p class="card-text"></p>
-                                        <p class="card-text">Total de votos: 100</p>
+                                        <p class="card-text">Total de votos: {item.collage}</p>
                                         </center>
                                     </div>
                                 </div>
