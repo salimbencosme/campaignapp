@@ -78,7 +78,7 @@ class Home extends Component {
                                         <center class="backCustom">
                                         <h4 class="card-title">{item.collage} </h4>
                                         <p class="card-text"></p>
-                                        <p class="card-text">Total de votos: {item.collage}</p>
+                                        <p class="card-text">Total de votos: {item.total}</p>
                                         </center>
                                     </div>
                                 </div>
@@ -96,12 +96,10 @@ class Home extends Component {
         return (
             <div>
             <section id="team" class="pb-5">
-                <div class="container" style={{'background':'#ffffffd6','border-radius':'6px'}}>
+                <div class="container" style={{'background':'white','border-radius':'6px'}}>
                     <h5 class="section-title h1">MIS VOTOS</h5>
                     <div class="row">
-                            {this.createTable()}
-
-                    
+                            {this.createTable()}                    
                     </div>
                 </div>
                 </section>

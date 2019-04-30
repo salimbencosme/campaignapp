@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import '../resources/css/home.css';
+import 'react-notifications/lib/notifications.css';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 import { getAllCollageAndTables, getCollageInfo, getTableInfo, savePerson, getAllVotes } from '../common/ApiServices';
 import { currentDateWithFormat } from '../common/Utils';
