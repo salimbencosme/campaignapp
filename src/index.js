@@ -7,6 +7,7 @@ import { BrowserRouter as Router, Route, Switch,HashRouter } from "react-router-
 import Main from './containers/Main';
 import Login from './components/Login';
 import Home from './components/Home';
+import HomeDetails from './components/HomeDetails'
 import Persons from './components/Persons';
 import Schools from './components/Schools';
 import Tables from './components/Tables';
@@ -20,6 +21,7 @@ ReactDOM.render(
             <Route exact path="/reportsDetails" component={ReportsDetails} />
             <Main>
             <Route exact path="/home" component={Home} />
+            <Route exact path="/homedetails" component={HomeDetails} />
             <Route exact path="/persons" component={Persons} />
             <Route exact path="/schools" component={Schools} />
             <Route exact path="/tables" component={Tables} />

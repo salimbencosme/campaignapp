@@ -139,7 +139,7 @@ class Persons extends Component {
 
 
         } else {
-            NotificationManager.error("Debe seleccionar un colegio electoral.");
+            NotificationManager.error("Debe seleccionar un centro.");
         }
 
     }
@@ -298,12 +298,12 @@ class Persons extends Component {
                                     </div>
 
                                     <div class="form-group">
-                                        <label>Colegio</label>
+                                        <label>Centro</label>
                                         {this.createSelectCollage()}
                                     </div>
 
                                     <div class="form-group">
-                                        <label>Mesa</label>
+                                        <label>Colegio</label>
                                         {this.createSelectTables()}
                                     </div>
 

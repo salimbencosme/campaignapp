@@ -20,7 +20,8 @@ class Nav extends Component {
         <Navbar.Collapse>
 
           <NAVT pullRight>
-            <li><Link  to="/home">Mis votos</Link></li>
+            <li><Link  to="/home">Mis votos (centros)</Link></li>
+            <li><Link  to="/homedetails">Mis votos (colegios)</Link></li>
             <li><Link  to="/persons">Registrar</Link></li>
             <li><Link  to="/reports">Reportes</Link></li>
           </NAVT>

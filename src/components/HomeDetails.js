@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import '../resources/css/home.css';
-import { getAllVotes,getVotesInfo } from '../common/ApiServices';
+import { getAllVotes,getVotesInfoDetails } from '../common/ApiServices';
 
-class Home extends Component {
+class HomeDetails extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -28,7 +28,7 @@ class Home extends Component {
 
         getAllVotes().on('value', function (data) {
             let infoData = data.val();
-            var votesContainer = getVotesInfo(infoData);
+            var votesContainer = getVotesInfoDetails(infoData);
 
             currentComponent.setState({
                 votes: votesContainer
@@ -67,6 +67,7 @@ class Home extends Component {
                                 <div class="card">
                                     <div class="card-body text-center"><br/>
                                         <center><div class="circle" style={{'background': color}}></div></center>
+                                        <h4 class="card-title">{item.table} </h4>
                                         <p class="card-text">{item.collage}</p>
                                         <p class="card-text">Total de votos: {item.total}</p>
                                     </div>
@@ -76,8 +77,8 @@ class Home extends Component {
                                 <div class="card">
                                     <div class="card-body text-center mt-4">
                                         <center class="backCustom">
-                                        <h4 class="card-title">{item.collage} </h4>
-                                        <p class="card-text"></p>
+                                        <h4 class="card-title">{item.table} </h4>
+                                        <p class="card-text">{item.collage}</p>
                                         <p class="card-text">Total de votos: {item.total}</p>
                                         </center>
                                     </div>
@@ -97,7 +98,7 @@ class Home extends Component {
             <div>
             <section id="team" class="pb-5">
                 <div class="container" style={{'background':'white','border-radius':'6px'}}>
-                    <h5 class="section-title h1">MIS VOTOS (CENTROS)</h5>
+                    <h5 class="section-title h1">MIS VOTOS (COLEGIOS)</h5>
                     <div class="row">
                             {this.createTable()}                    
                     </div>
@@ -108,4 +109,4 @@ class Home extends Component {
     }
 }
 
-export default Home;
+export default HomeDetails;
