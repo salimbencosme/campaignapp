@@ -183,7 +183,7 @@ class Reports extends Component {
                                 <br />
                                 <div class="card-contact border-primary rounded-0">
 
-                                    <table id="customers">
+                                    <table id="customers" >
                                             {this.createTable()}
                                     </table>
 

@@ -40,7 +40,7 @@ export function getCollageInfo(infoData) {
             }
         }
     }
-    return collageTemp;
+    return collageTemp.sort((a, b) => a.name.localeCompare(b.name));
 };
 
 
