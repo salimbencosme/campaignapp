@@ -242,3 +242,19 @@ p {
   }
 
 /*END TABLE*/
+
+
+#logoutOption{
+    color: #60157e;
+    background-color: #fceb09;
+    border: 1px dashed #60157e;
+    cursor: pointer;
+}
+
+
+#logoutOption:hover{
+    color: #fceb09;
+    background-color:  #60157e;
+    border: 1px dashed #fceb09;
+    cursor: pointer;
+}

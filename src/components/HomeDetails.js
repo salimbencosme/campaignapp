@@ -11,15 +11,23 @@ class HomeDetails extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        this.handlerApiLogic();
-        console.log("componentWillReceiveProps");
-        console.log(this.state.votes);
+        if(localStorage.getItem('user-storage') != null){
+            this.handlerApiLogic();
+            console.log("componentWillReceiveProps");
+            console.log(this.state.votes);         
+        }else{
+            this.props.history.push('/');
+         }
     }
 
     componentDidMount() {
-        this.handlerApiLogic();
-        console.log("componentDidMount");
-        console.log(this.state.votes);
+        if(localStorage.getItem('user-storage') != null){
+            this.handlerApiLogic();
+            console.log("componentDidMount");
+            console.log(this.state.votes);         
+        }else{
+            this.props.history.push('/');
+        }
     }
 
     handlerApiLogic() {
