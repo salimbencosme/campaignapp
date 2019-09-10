@@ -57,6 +57,7 @@ class Login extends Component {
 
                 if (cont > 0) {
                     localStorage.setItem('user-storage', userSelected);
+                    localStorage.setItem('user-storage-name', userSelected.name);
                     this.props.history.push('/home');
                 } else {
                     NotificationManager.error("Los credenciales ingresados no son correctos. Por favor, verifique y trate de nuevo.");
